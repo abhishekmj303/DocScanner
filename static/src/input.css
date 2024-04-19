@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.filepond--root {
+    max-height: 43em;
+}
+
+.filepond--item {
+    width: calc(100% - 0.5em);
+}
