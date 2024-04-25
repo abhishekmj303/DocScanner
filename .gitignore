@@ -1,4 +1,6 @@
 __pycache__
 .venv
 static/dist/
+static/**/*.pdf
 uploads
+scans

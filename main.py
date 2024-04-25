@@ -8,9 +8,13 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+from docscanner.scanner import DocScanner
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+
+scanner = DocScanner()
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -42,4 +46,5 @@ async def create_upload_file(
         file_path = f"uploads/{user_id}/{i}_{file.filename}"
         with open(file_path, "wb") as buffer:
             buffer.write(await file.read())
-    return ""
+    pdf_path = scanner.create_document(f"uploads/{user_id}")
+    return HTMLResponse("", headers={"HX-Redirect": pdf_path})
