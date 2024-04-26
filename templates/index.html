@@ -12,12 +12,8 @@
     />
 {% endblock %}
 
-{% block content %}
-    <!--
-// v0 by Vercel.
-// https://v0.dev/t/LHUDBLrzCuH
--->
 
+{% block content %}
 <style>h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; --font-sans: 'Inter'; }
 </style>
 <style>body { font-family: 'Inter', sans-serif; --font-sans: 'Inter'; }
@@ -25,6 +21,9 @@
 <div class="flex flex-col items-center justify-center h-screen bg-gray-100">
   <div class="p-6 bg-white rounded-lg shadow-md">
     <h1 class="text-2xl font-bold mb-4">Document Scanner</h1>
+    <div class="mb-6 text-center text-gray-500">
+      <p>Easily scan and upload your documents with our powerful document scanner.</p>
+    </div>
     <form id='form'
       hx-encoding='multipart/form-data'
       hx-post='/upload'
@@ -32,7 +31,10 @@
       hx-on::after-request="if(event.detail.successful) this.reset()">
       <input type="file" name="files" class="filepond" required>
       <div class="flex flex-col space-y-4">
-          <progress id='progress' value='0' max='100'></progress>
+          <progress id='progress' value='0' max='100' style="display: none;"></progress>
+          <div id="spinner" class="inline-flex items-center justify-center">
+            <span class="loader" style="display: none;"></span>
+          </div>
           <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-100 hover:text-accent-foreground h-10 px-4 py-2 transition-transform duration-300 hover:scale-105"
           >
           <svg
@@ -54,30 +56,6 @@
           Upload Photos
         </button>
     </form>
-      <!-- <div class="htmx-indicator">Uploading...</div> -->
-      <span class="text-center text-gray-500">or</span>
-      <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-100 hover:text-accent-foreground h-10 px-4 py-2 transition-transform duration-300 hover:scale-105">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2 h-5 w-5"
-        >
-          <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
-          <circle cx="12" cy="13" r="3"></circle>
-        </svg>
-        Scan Document
-      </button>
-    </div>
-    <div class="mt-6 text-center text-gray-500">
-      <p>Easily scan and upload your documents with our powerful document scanner.</p>
-    </div>
   </div>
 </div>
 
@@ -106,9 +84,11 @@
   });
 </script>
 
-  <script>
-    htmx.on('#form', 'htmx:xhr:progress', function(evt) {
-      htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
-    });
-  </script>
+<script>
+  htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+    htmx.find('#progress').style.display = 'block'
+    htmx.find('.loader').style.display = 'block'
+    htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+  });
+</script>
 {% endblock %}

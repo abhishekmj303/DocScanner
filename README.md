@@ -4,6 +4,10 @@ DocScanner is a simple tool to scan a document and create a PDF file from it. It
 
 ## Setup Requirements
 
+```bash
+sudo apt install libgl1
+```
+
 ```
 pip install -r requirements.txt
 ```
