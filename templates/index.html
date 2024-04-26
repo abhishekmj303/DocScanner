@@ -31,7 +31,7 @@
       hx-on::after-request="if(event.detail.successful) this.reset()">
       <input type="file" name="files" class="filepond" required>
       <div class="flex flex-col space-y-4">
-          <progress id='progress' value='0' max='100' style="display: none;"></progress>
+          <progress id='progress' value='0' max='100' class="rounded-md" style="display: none;"></progress>
           <div id="spinner" class="inline-flex items-center justify-center">
             <span class="loader" style="display: none;"></span>
           </div>

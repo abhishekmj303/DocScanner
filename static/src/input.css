@@ -10,6 +10,10 @@
   width: calc(50% - 0.5em);
 }
 
+progress::-moz-progress-bar { background: #38bdf8; }
+progress::-webkit-progress-value { background: #38bdf8; }
+progress { color: #38bdf8; }
+
 .loader {
   width: 200px;
   height: 140px;
