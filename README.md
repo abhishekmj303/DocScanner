@@ -2,6 +2,19 @@
 
 DocScanner is a simple tool to scan a document and create a PDF file from it. It uses OpenCV to detect the document in the image and then uses the detected document to create a PDF file.
 
+## Frontend
+- Change order of images before uploading
+- Upload progress bar
+- Processing animation
+
+## Backend
+- Isolate different anonymous users
+- Robust edge detection
+- Perspective transformation
+- Auto add filters to final images
+- Create PDF document
+- Auto delete generated document after 1 hour
+
 ## Setup Requirements
 
 ```bash
