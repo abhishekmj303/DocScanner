@@ -27,11 +27,10 @@
     <form id='form'
       hx-encoding='multipart/form-data'
       hx-post='/upload'
-      hx-swap="none"
-      hx-on::after-request="if(event.detail.successful) this.reset()">
+      hx-swap="none">
       <input type="file" name="files" class="filepond" required>
       <div class="flex flex-col space-y-4">
-          <progress id='progress' value='0' max='100' class="rounded-md" style="display: none;"></progress>
+          <progress id='progress' value='0' max='100' class="w-full h-2.5 rounded-full" style="display: none;"></progress>
           <div id="spinner" class="inline-flex items-center justify-center">
             <span class="loader" style="display: none;"></span>
           </div>
@@ -85,10 +84,18 @@
 </script>
 
 <script>
-  htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+  htmx.on('#form', 'htmx:xhr:loadstart', function(evt) {
     htmx.find('#progress').style.display = 'block'
     htmx.find('.loader').style.display = 'block'
+  });
+
+  htmx.on('#form', 'htmx:xhr:progress', function(evt) {
     htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+  });
+
+  htmx.on('#form', 'htmx:afterRequest', function(evt) {
+    htmx.find('#progress').style.display = 'none'
+    htmx.find('.loader').style.display = 'none'
   });
 </script>
 {% endblock %}
